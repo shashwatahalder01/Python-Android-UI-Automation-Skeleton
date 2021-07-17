@@ -287,82 +287,184 @@ class BasePage(object):
     # Emulate power capacity change on the connected emulator.
     def emulate_power_capacity(self, powerPercentage):
         self.driver.set_power_capacity(powerPercentage)
+        # self.driver.set_power_capacity(50)
 
     # Files_________________________
+
+    # Place a file onto the device in a particular place
+    def push_file(self, filePath):
+        dest_path = '/data/local/tmp/test_push_file.txt'
+        data = bytes('This is the contents of the file to push to the device.', 'utf-8')
+        self.driver.push_file(dest_path, base64.b64encode(data).decode('utf-8'))
+
+    # Retrieve a file from the device's file system
+    def pull_file(self, filePath):
+        file_base64 = self.driver.pull_file('/path/to/device/foo.bar')
+
+    # Retrieve a folder from the device's file system
+    def pull_folder(self, folderPath):
+        folder_base64 = self.driver.pull_folder('/path/to/device/foo.bar')
+
     # Interactions_________________________
+
+    # Perform a shake action on the device
+    def shake_device(self):
+        self.driver.shake()
+
+    # Lock the device
+    def lock_device(self):
+        self.driver.lock()
+
+    # Unlock the device
+    def unlock_device(self):
+        self.driver.unlock()
+
+    # Check whether the device is locked or not
+    def is_device_locked(self):
+        val = self.driver.is_locked()
+        return val
+
+    # Rotate the device in three dimensions
+    # Not supported # use js method
+
     # Keys_________________________
+
+    # Press a particular key on an Android Device
+    def press_key(self, key):
+        self.driver.press_keycode(10)
+
+    # Press and hold a particular key code on an Android device
+    def long_press_key(self):
+        self.driver.long_press_keycode(10)
+        self.driver.long_press_keycode(AndroidKeyCode.HOME)
+
+    # Hide soft keyboard
+    def hide_keyboard(self):
+        self.driver.hide_keyboard()
+
+    # Whether or not the soft keyboard is shown
+    def is_keyboard_shown(self):
+        self.driver.is_keyboard_shown()
+
     # NetWork_________________________
+
+    # Toggle airplane mode on device
+    def toggle_airplane(self):
+        self.driver.toggleAirplaneMode()
+
+    # Switch the state of data service
+    def toggle_data(self):
+        pass
+        # Not supported
+
+    # Switch the state of the WiFi service
+    def toggle_wifi(self):
+        self.driver.toggleWifi()
+
+    #  Switch the state of the location service
+    def toggle_location_services(self):
+        self.driver.toggle_location_services()
+
+    # Simulate an SMS message (Emulator only)
+    def send_sms(self):
+        self.driver.send_sms('555-123-4567', 'Hey lol')
+
+    # Make GSM call (Emulator only)
+    def make_call(self):
+        self.driver.make_gsm_call('5551234567', GsmCallActions.CALL)
+
+    # Set GSM signal strength (Emulator only)
+    def set_signal(self):
+        self.driver.set_gsm_signal(GsmSignalStrength.GOOD)
+
+    # Set GSM voice state (Emulator only)
+    def set_voice_state(self):
+        self.driver.set_gsm_voice(GsmVoiceState.HOME)
+
+    # Set network speed (Emulator only)
+    def set_network_speed(self):
+        self.driver.set_network_speed(NetSpeed.LTE)
+
     # performance Data_________________________
-    # screen Recording_________________________
-    # Simulator_________________________
-    # System_________________________
-    # Authentication_________________________
 
-    # Element___________________________________________________________________
+    # Returns the information of the system state which is supported to read as like cpu, memory, network traffic, and battery
+    def get_performance_data(self):
+        self.driver.get_performance_data('my.app.package', 'cpuinfo', 5)
 
-    # Find Element_________________________
-    # Find Elements_________________________
-    # Actions_________________________
-    # Attributes_________________________
-    # Other_________________________
+    # Returns the information types of the system state which is supported to read as like cpu, memory, network traffic, and battery
+    def get_performance_data_types(self):
+        self.driver.get_performance_data_types()
 
-    # Context___________________________________________________________________
+# screen Recording_________________________
+# Simulator_________________________
+# System_________________________
+# Authentication_________________________
 
-    # Get Context_________________________
-    # Get All Context_________________________
-    # Set Context_________________________
+# Element___________________________________________________________________
 
-    # Interactions___________________________________________________________________
+# Find Element_________________________
+# Find Elements_________________________
+# Actions_________________________
+# Attributes_________________________
+# Other_________________________
 
-    # Mouse_________________________
-    # Touch_________________________
-    # W3c Actions_________________________
+# Context___________________________________________________________________
 
-    # Web___________________________________________________________________
+# Get Context_________________________
+# Get All Context_________________________
+# Set Context_________________________
 
-    # Window_________________________
-    # Navigation_________________________
-    # Storage_________________________
-    # Frame_________________________
-    # Execute Async_________________________
-    # Execute_________________________
+# Interactions___________________________________________________________________
 
-    # def find_element(self, *locator):
-    #     return self.driver.find_element(*locator)
+# Mouse_________________________
+# Touch_________________________
+# W3c Actions_________________________
 
-    # def find_elements(self, *locator):
-    #     return self.driver.find_elements(*locator)
-    #
-    # def open(self, url):
-    #     url = self.base_url + url
-    #     self.driver.get(url)
-    #
-    # def get_title(self):
-    #     return self.driver.title
-    #
-    # def get_url(self):
-    #     return self.driver.current_url
-    #
-    # def refresh(self):
-    #     return self.driver.refresh()
+# Web___________________________________________________________________
 
-    #
-    # def hover(self, *locator):
-    #     element = self.find_element(*locator)
-    #     hover = ActionChains(self.driver).move_to_element(element)
-    #     hover.perform()
-    #
-    # def wait_element(self, *locator):
-    #     try:
-    #         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator))
-    #     except TimeoutException:
-    #         print("\n * ELEMENT NOT FOUND WITHIN GIVEN TIME! --> %s" %(locator[1]))
-    #         self.driver.quit()
-    #
-    # def wait_element1(self, *locator):
-    #     try:
-    #         ignored_exceptions = (NoSuchElementException, StaleElementReferenceException )
-    #         WebDriverWait(self.driver, 10, ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located(locator))
-    #     except TimeoutException:
-    #         print("\n * ELEMENT NOT FOUND WITHIN GIVEN TIME! --> %s" %(locator[1]))
-    #         self.driver.quit()
+# Window_________________________
+# Navigation_________________________
+# Storage_________________________
+# Frame_________________________
+# Execute Async_________________________
+# Execute_________________________
+
+# def find_element(self, *locator):
+#     return self.driver.find_element(*locator)
+
+# def find_elements(self, *locator):
+#     return self.driver.find_elements(*locator)
+#
+# def open(self, url):
+#     url = self.base_url + url
+#     self.driver.get(url)
+#
+# def get_title(self):
+#     return self.driver.title
+#
+# def get_url(self):
+#     return self.driver.current_url
+#
+# def refresh(self):
+#     return self.driver.refresh()
+
+#
+# def hover(self, *locator):
+#     element = self.find_element(*locator)
+#     hover = ActionChains(self.driver).move_to_element(element)
+#     hover.perform()
+#
+# def wait_element(self, *locator):
+#     try:
+#         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator))
+#     except TimeoutException:
+#         print("\n * ELEMENT NOT FOUND WITHIN GIVEN TIME! --> %s" %(locator[1]))
+#         self.driver.quit()
+#
+# def wait_element1(self, *locator):
+#     try:
+#         ignored_exceptions = (NoSuchElementException, StaleElementReferenceException )
+#         WebDriverWait(self.driver, 10, ignored_exceptions=ignored_exceptions).until(EC.presence_of_element_located(locator))
+#     except TimeoutException:
+#         print("\n * ELEMENT NOT FOUND WITHIN GIVEN TIME! --> %s" %(locator[1]))
+#         self.driver.quit()
