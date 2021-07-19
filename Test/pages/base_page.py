@@ -663,7 +663,14 @@ class BasePage(object):
 # Mouse_________________________
 # Touch_________________________
 # W3c Actions_________________________
-
+    # Perform a chain or multiple chains of keyboard and pointer (touch, mouse, stylus) actions
+    def actions(self, locator1, locator2):
+        element = self.find_element(locator1)
+        hidden_submenu = self.find_element(locator2)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.click(hidden_submenu)
+        actions.perform()
 # Web___________________________________________________________________
 
 # Window_________________________
