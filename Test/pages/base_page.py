@@ -671,6 +671,190 @@ class BasePage(object):
         actions.move_to_element(element)
         actions.click(hidden_submenu)
         actions.perform()
+        
+    # Touch_________________________
+
+    # Single tap on the touch enabled device
+    def single_tap(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.tap(element)
+        actions.perform()
+
+    # Double tap on the touch screen using finger motion events
+    def double_tap(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.double_tap(element)
+        actions.perform()
+
+    # Finger move on the screen
+    def move_to(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.tap_and_hold(element)
+        actions.move_to(element, 50, 50)
+        actions.perform()
+
+    # Finger down on the screen
+    def touch_down(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.tap_and_hold(element)
+        actions.move(50, 50)
+        actions.perform()
+
+    # Finger up on the screen
+    def touch_up(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.tap_and_hold(20, 20)
+        actions.release(50, 50)
+        actions.perform()
+
+    # Long press on the touch screen using finger motion events
+    def long_tap(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.long_press(element)
+        actions.perform()
+
+    # Scroll on the touch screen using finger based motion events
+    def scroll(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.scroll_from_element(element, 10, 100)
+        actions.scroll(10, 100)
+        actions.perform()
+
+    # Flick on the touch screen using finger motion events
+    def flick(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.flick_element(element, 1, 10, 10)
+        actions.perform()
+
+    # Perform a multi touch action sequence
+    def multi_touch_perform(self):
+        # actions = TouchAction(self.driver)
+        a1 = TouchAction()
+        a1.press(10, 20)
+        a1.move_to(10, 200)
+        a1.release()
+
+        a2 = TouchAction()
+        a2.press(10, 10)
+        a2.move_to(10, 100)
+        a2.release()
+
+        ma = MultiAction(self.driver)
+        ma.add(a1, a2)
+        ma.perform()
+
+    # Flick on the touch screen using finger motion events
+    def touch(self, locator):
+        element = self.find_element(locator)
+        actions = TouchAction(self.driver)
+        actions.tap_and_hold(20, 20)
+        actions.move_to(10, 100)
+        actions.release()
+        actions.perform()
+
+    # W3c Actions_________________________
+
+    # Perform a chain or multiple chains of keyboard and pointer (touch, mouse, stylus) actions
+    def actions(self, locator1, locator2):
+        element = self.find_element(locator1)
+        hidden_submenu = self.find_element(locator2)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.click(hidden_submenu)
+        actions.perform()
+
+    # Web___________________________________________________________________
+
+    # Window_________________________
+
+    # Change focus to another window (Web context only)
+    def switch_to_window(self, handle):
+        self.driver.switch_to.window("handle")
+
+    # Change focus to another window (Web context only)
+    def close_window(self):
+        self.driver.close()
+
+    # Retrieve the current window handle (Web context only)
+    def get_window_handle(self):
+        window_handle = self.driver.current_window_handle
+        return window_handle
+
+    # Retrieve the list of all window handles available to the session (Web context only)
+    def get_window_handles(self):
+        window_handles = self.driver.window_handles
+        return window_handles
+
+    # Get the current page title (Web context only)
+    def get_title(self):
+        title = self.driver.title
+        return title
+
+    # Get the size of the specified window (Web context only)
+    def get_window_size(self):
+        handle_one_size = self.driver.get_window_size()
+        handle_two_size = self.driver.get_window_size("handleName")
+        return handle_one_size, handle_two_size
+
+    # Change the size of the specified window (Web context only)
+    def set_window_size(self):
+        self.driver.set_window_size(10, 10)
+
+    # Get the position of the specified window (Web context only)
+    def get_window_position(self):
+        handle_one_position = self.driver.get_window_position()
+        handle_two_position = self.driver.get_window_position("handleName")
+        return handle_one_position, handle_two_position
+
+    # Change the position of the specified window (Web context only)
+    def set_window_position(self):
+        self.driver.set_window_position(10, 10)
+
+    # Maximize the specified window (Web context only)
+    def maximize_window(self):
+        self.driver.maximize_window()
+
+    # Navigation_________________________
+
+    # Navigate to a new URL (Web context) or open an Appium deep link (Native)
+    def go_to_url(self, url):
+        self.driver.get("http://appium.io/")
+
+    # Retrieve the URL of the current page (Web context only)
+    def get_url(self):
+        url = self.driver.current_url()
+        return url
+
+    # Navigate backwards in the browser history, if possible (Web context only)
+    def go_back(self):
+        self.driver.back()
+
+    # Navigate forwards in the browser history, if possible (Web context only)
+    def go_forward(self):
+        self.driver.forward()
+
+    # Refresh the current page. (Web context only)
+    def refresh(self):
+        self.driver.refresh()
+
+    # Storage_________________________
+
+    # Retrieve all cookies visible to the current page (Web context only)
+    def get_all_cookies(self):
+        cookies = self.driver.get_cookies()
+        return cookies
+
+    # Set a cookie (Web context only)
+    def set_cookie(self):
+        self.driver.add_cookie({name: 'foo', value: 'bar'})
 # Web___________________________________________________________________
 
 # Window_________________________
