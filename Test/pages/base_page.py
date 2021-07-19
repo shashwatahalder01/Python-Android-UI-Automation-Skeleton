@@ -394,6 +394,250 @@ class BasePage(object):
     # Returns the information types of the system state which is supported to read as like cpu, memory, network traffic, and battery
     def get_performance_data_types(self):
         self.driver.get_performance_data_types()
+        
+    # screen Recording_________________________
+
+    # Start recording screen
+    def start_record_screen(self):
+        self.driver.start_recording_screen()
+
+    # Stop recording screen
+    def stop_record_screen(self):
+        self.driver.stop_recording_screen()
+
+    # Simulator_________________________
+
+    # Simulate a touch id event (iOS Simulator only)
+    def perform_touch_id(self):
+        self.driver.touch_id(False)  # Simulates a failed touch
+        self.driver.touch_id(True)  # Simulates a passing touch
+
+    # Toggle the simulator being enrolled to accept touchId (iOS Simulator only)
+    def toggle_touch_id_enrollment(self):
+        self.driver.toggle_touch_id_enrollment()
+
+    # System_________________________
+
+    # Open Android notifications (Emulator only)
+    def open_notifications(self):
+        self.driver.open_notifications()
+
+    # Retrieve visibility and bounds information of the status and navigation bars
+    def get_system_bars(self):
+        sysInfo = self.driver.get_system_bars()
+        return sysInfo
+
+    # Get the time on the device
+    def get_system_time(self):
+        time = self.driver.device_time
+        # time = self.driver.get_device_time()
+        # time = self.driver.get_device_time("YYYY-MM-DD")
+        return time
+
+    # Retrieve display density(dpi) of the Android device
+    def get_display_density(self):
+        dpi = self.driver.get_display_density()
+        return dpi
+
+    # Authentication_________________________
+
+    # Authenticate users by using their finger print scans on supported emulators.
+    def authenticate_user_by_fingerprint(self):
+        self.driver.finger_print(1)
+
+    # Element___________________________________________________________________
+
+    # Find Element_________________________
+
+    # Search for an element on the page
+    def find_element(self, locator):
+        element = self.driver.find_element_by_accessibility_id(locator)
+        element = self.driver.find_element_by_xpath(locator)
+        return element
+
+    # Find Elements_________________________
+
+    # Search for multiple elements
+    def find_elements(self, locator):
+        elements = self.driver.find_elements_by_accessibility_id(locator)
+        elements = self.driver.find_elements_by_xpath(locator)
+        return elements
+
+    # Actions_________________________
+
+    # Click element at its center point.
+    def click(self, locator):
+        element = self.find_element(locator)
+        element.click()
+
+    # Send a sequence of key strokes to an element
+    def send_keys(self, data, locator):
+        element = self.find_element(locator)
+        element.send_keys(data)
+
+    # Clear an element's value
+    def clear(self, locator):
+        element = self.find_element(locator)
+        element.clear()
+
+    # Attributes_________________________
+
+    # Returns visible text for element
+    def get_element_text(self, locator):
+        element = self.find_element(locator)
+        text = element.text
+        return text
+
+    # Get an element's tag name
+    def get_tag_name(self, locator):
+        element = self.find_element(locator)
+        tagName = element.tag_name
+        return tagName
+
+    # Get an element's tag name
+    def get_element_attribute(self, attribute, locator):
+        element = self.find_element(locator)
+        attribute = element.get_attribute(attribute)
+        return attribute
+
+    # Determine if a form or form-like element (checkbox, select, etc...) is selected
+    def is_element_selected(self, locator):
+        element = self.find_element(locator)
+        val = element.is_selected()
+        return val
+
+    # Determine if an element is currently enabled
+    def is_element_enabled(self, locator):
+        element = self.find_element(locator)
+        val = element.is_enabled()
+        return val
+
+    # Determine if an element is currently displayed
+    def is_element_displayed(self, locator):
+        element = self.find_element(locator)
+        val = element.is_displayed()
+        return val
+
+    # Determine an element's location on the page or screen
+    def get_element_location(self, locator):
+        element = self.find_element(locator)
+        location = element.location
+        return location
+
+    # Determine an element's size in pixels
+    def get_element_size(self, locator):
+        element = self.find_element(locator)
+        size = element.size
+        return size
+
+    # Gets dimensions and coordinates of an element
+    def get_element_rect(self, locator):
+        element = self.find_element(locator)
+        val = element.rect
+        return val
+
+    # Query the value of a web element's computed CSS property
+    def get_element_css_value(self, cssProperty, locator):
+        element = self.find_element(locator)
+        cssProperty = element.value_of_css_property(cssProperty)
+        return cssProperty
+
+    # Determine an element's location on the screen once it has been scrolled into view (mainly an internal command and not supported by all clients)
+    def get_element_location_in_view(self, locator):
+        element = self.find_element(locator)
+        location = element.location_in_view
+        return location
+
+    # Other_________________________
+
+    # Submit a FORM element
+    def submit_form(self, locator):
+        element = self.find_element(locator)
+        element.submit()
+
+    # Gets the active element of the current session
+    def get_active_element(self, locator):
+        element = self.driver.switch_to.active_element
+        return element
+
+    # Test if two element IDs refer to the same element
+    def are_elements_equal(self, locator1, locator2):
+        element1 = self.find_element(locator1)
+        element2 = self.find_element(locator2)
+        val = ''
+        if element1 == element2:
+            val = True
+        else:
+            val = False
+        return val
+
+    # Context___________________________________________________________________
+
+    # Get Context_________________________
+
+    # Get the current context in which Appium is running
+    def get_current_context(self):
+        context = self.driver.current_context
+        context = self.driver.context
+        return context
+
+    # Get All Context_________________________
+
+    # Get all the contexts available to automate
+    def get_all_contexts(self):
+        contexts = self.driver.contexts
+        return contexts
+
+    # Set Context_________________________
+
+    # Set the context being automated
+    def set_current_context(self):
+        webview = self.driver.contexts[1]
+        self.driver.switch_to.context(webview)
+        self.driver.switch_to.context('NATIVE_APP')
+
+    # Interactions___________________________________________________________________
+
+    # Mouse_________________________
+
+    # Move the mouse by an offset of the specificed elemen
+    def move_mouse_to(self, locator):
+        element = self.find_element(locator)
+        actions = ActionChains(self.driver)
+        actions.move_to(element, 10, 10)
+        actions.perform()
+
+    # Click any mouse button at the current mouse coordinates
+    def click_by_actionChains(self, locator):
+        element = self.find_element(locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.click()
+        actions.perform()
+
+    # Double-clicks at the current mouse coordinates (set by moveto).
+    def double_click_by_actionChains(self, locator):
+        element = self.find_element(locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.double_click()
+        actions.perform()
+
+    # Click and hold the left mouse button at the current mouse coordinates
+    def button_down(self, locator):
+        element = self.find_element(locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.click_and_hold()
+        actions.perform()
+
+    # Releases the mouse button previously held
+    def button_up(self, locator):
+        element = self.find_element(locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element)
+        actions.click_and_hold()
+        actions.perform()
 
 # screen Recording_________________________
 # Simulator_________________________
